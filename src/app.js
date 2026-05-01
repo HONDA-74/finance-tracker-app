@@ -29,6 +29,7 @@ connectDB();
 
 app.use(
   cors({
+    origin : "http://localhost:4200",
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
