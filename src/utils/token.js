@@ -3,14 +3,14 @@ import jwt from "jsonwebtoken";
 export const addTokenToCookie = (token , refreshToken , res) => {
   res.cookie("token", token, {
     httpOnly: true,
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     maxAge: 7 * 24 * 60 * 60 * 1000,
     sameSite: "none",
   });
 
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: false,
+    secure: process.env.NODE_ENV === "production",
     maxAge: 30 * 24 * 60 * 60 * 1000,
     sameSite: "none",
   });
