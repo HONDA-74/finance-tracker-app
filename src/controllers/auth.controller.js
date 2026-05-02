@@ -13,7 +13,7 @@ export const registerUser = async (req, res, next) => {
     }
     const { user , token , refreshToken } = await authService.registerUser({name , email , password});
     addTokenToCookie(token , refreshToken , res);
-    res.status(201).json({success: true , user, token});
+    res.status(201).json({success: true , user, token , refreshToken });
 }
 
 export const loginUser = async (req, res, next) => {
@@ -23,7 +23,7 @@ export const loginUser = async (req, res, next) => {
         throw createError(401 , "Invalid email or password")
     }
     addTokenToCookie(token , refreshToken , res);
-    res.status(200).json({success: true , user , token });
+    res.status(200).json({success: true , user , token , refreshToken });
 }
 
 export const logoutUser = async (req, res, next) => {
