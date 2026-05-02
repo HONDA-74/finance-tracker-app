@@ -19,6 +19,7 @@ import adminRoutes from "./routes/admin.routes.js";
 import reportsRoutes from "./routes/reports.routes.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
+import chatBotRoutes from "./routes/chatBot.routes.js";
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use("/api/v1/notifications", notificationRoutes);
 app.use("/api/v1/admin", adminUserRoutes);
 app.use("/api/v1/admin/analytics", adminRoutes);
 app.use("/api/v1/reports", reportsRoutes);
+app.use("/chatBot" , chatBotRoutes)
 
 app.use((req, res, next) => {
   res.status(404).json({ success: false, message: "Route not found" });
