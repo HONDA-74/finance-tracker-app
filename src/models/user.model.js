@@ -37,6 +37,11 @@ const userSchema = new Schema(
       secure_url: { type: String, default: defaultAvatar.secure_url },
       public_id: { type: String, default: defaultAvatar.public_id },
     },
+    plan: {
+    type: String,
+    enum: ["free", "premium"],
+    default: "free",
+  },
   },
   {
     timestamps: true,
