@@ -20,6 +20,7 @@ import reportsRoutes from "./routes/reports.routes.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
 import chatBotRoutes from "./routes/chatBot.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
 
 const app = express();
 
@@ -46,9 +47,13 @@ app.use(globalLimiter);
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
-app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+app.use("/api/v1/payment", paymentRoutes);
+app.use(express.json());
+
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
@@ -61,6 +66,7 @@ app.use("/api/v1/admin", adminUserRoutes);
 app.use("/api/v1/admin/analytics", adminRoutes);
 app.use("/api/v1/reports", reportsRoutes);
 app.use("/chatBot" , chatBotRoutes)
+
 
 app.use((req, res, next) => {
   res.status(404).json({ success: false, message: "Route not found" });

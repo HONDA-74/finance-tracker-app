@@ -7,8 +7,8 @@ const router = Router();
 
 router.post(
   "/",
-//   authenticate,
-//   authorize(["user", "admin"]),
+  authenticate,
+  authorize(["user", "admin"]),
   chatBotController.getChatBot
 );
 
