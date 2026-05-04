@@ -4,7 +4,7 @@ import {User} from "../models/user.model.js";
 
 export const authenticate = async (req, res, next) => {
   const token = req.cookies.token;
-
+  
   if (!token) {
     return next(createError(401, "No token provided"));
   }

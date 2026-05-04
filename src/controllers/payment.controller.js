@@ -4,33 +4,26 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-/**
- * POST /api/v1/payment/create-payment-intent
- * Protected route — req.user populated by your auth middleware
- */
+
 export const createPaymentIntent = async (req, res, next) => {
   try {
-    const userId = req.user.id; // from your existing JWT middleware
+    const userId = req.user.id;
     const { clientSecret } = await paymentService.createPaymentIntent(userId);
     res.status(200).json({ success: true, clientSecret });
   } catch (error) {
+    console.log(error);
     next(createError(400, error.message));
   }
 };
 
-/**
- * POST /api/v1/payment/webhook
- * PUBLIC route — called by Stripe, NOT by your users
- * MUST use express.raw() — JSON parsing breaks the signature
- */
+
 export const stripeWebhook = async (req, res, next) => {
   const sig = req.headers["stripe-signature"];
 
   let event;
   try {
-    // This throws if the signature is invalid — preventing spoofed events
     event = stripe.webhooks.constructEvent(
-      req.body,              // raw Buffer — do NOT use express.json() on this route
+      req.body,             
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     );
@@ -41,6 +34,8 @@ export const stripeWebhook = async (req, res, next) => {
 
   try {
     await paymentService.handleWebhookEvent(event);
+    console.log("here");
+    
     res.status(200).json({ received: true });
   } catch (err) {
     console.error("Webhook handler error:", err.message);
