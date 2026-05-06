@@ -268,7 +268,7 @@ router.put(
 router.put(
   "/profile/avatar",
   authenticate,
-  cloudUpload(["image/png", "image/jpeg"]).single("image"),
+  cloudUpload(["image/png", "image/jpeg"]).single("avatar"),
   validation(avatarSchema),
   userController.uploadAvatar,
 );

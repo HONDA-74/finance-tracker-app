@@ -7,7 +7,7 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "stripe-listen": "stripe listen --forward-to localhost:5000/api/v1/payment/webhook"
+    "webhook": "stripe listen --forward-to localhost:5000/api/v1/payment/webhook"
   },
   "keywords": [],
   "author": "",
