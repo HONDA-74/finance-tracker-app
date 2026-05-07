@@ -1,7 +1,12 @@
 import { Router } from "express";
 import * as authController from "../controllers/auth.controller.js";
 import { validation } from "../middlewares/validation.middleware.js";
-import { registerSchema, loginSchema, resetPasswordSchema , resetPasswordConfirmSchema} from "../validation/auth.validation.js";
+import {
+  registerSchema,
+  loginSchema,
+  resetPasswordSchema,
+  resetPasswordConfirmSchema,
+} from "../validation/auth.validation.js";
 
 const router = Router();
 
@@ -122,7 +127,11 @@ const router = Router();
  *       400:
  *         description: Email already exists or validation error
  */
-router.post("/register", validation(registerSchema), authController.registerUser);
+router.post(
+  "/register",
+  validation(registerSchema),
+  authController.registerUser,
+);
 
 /**
  * @swagger
@@ -200,7 +209,11 @@ router.post("/logout", authController.logoutUser);
  *       400:
  *         description: Email already exists or validation error
  */
-router.post("/register-admin", validation(registerSchema), authController.registerAdmin);
+router.post(
+  "/register-admin",
+  validation(registerSchema),
+  authController.registerAdmin,
+);
 
 /**
  * @swagger
@@ -235,7 +248,11 @@ router.post("/register-admin", validation(registerSchema), authController.regist
  *       500:
  *         description: Failed to send password reset email
  */
-router.post("/reset-password", validation(resetPasswordSchema), authController.resetPassword);
+router.post(
+  "/reset-password",
+  validation(resetPasswordSchema),
+  authController.resetPassword,
+);
 
 /**
  * @swagger
@@ -273,7 +290,37 @@ router.post("/reset-password", validation(resetPasswordSchema), authController.r
  *       401:
  *         description: Invalid or expired token
  */
-router.post("/reset-password-confirm/:token", validation(resetPasswordConfirmSchema), authController.resetPasswordConfirm);
+router.post(
+  "/reset-password-confirm/:token",
+  validation(resetPasswordConfirmSchema),
+  authController.resetPasswordConfirm,
+);
+
+/**
+ * @swagger
+ * /auth/reset-password-confirm/{token}:
+ *   get:
+ *     summary: Display password reset form
+ *     tags: [Auth]
+ *     parameters:
+ *       - in: path
+ *         name: token
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Password reset token received via email
+ *     responses:
+ *       200:
+ *         description: Password reset form displayed
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ */
+router.get(
+  "/reset-password-confirm/:token",
+  authController.showResetPasswordForm,
+);
 
 /**
  * @swagger
