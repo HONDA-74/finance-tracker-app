@@ -1,5 +1,3 @@
-import Joi from "joi";
-
 export const errorHandler = (err, req, res, next) => {
   let statusCode = err.status || 500;
   let message = err.message || "Internal Server Error";
