@@ -81,11 +81,38 @@ export const getBudgets = async (req, res, next) => {
 @access  Private
 */
 export const updateBudget = async (req, res, next) => {
-  const { amount } = req.body;
-  
+  const { amount, category, month, year } = req.body;
+  const existingBudget = await Budget.findOne({ _id: req.params.id, user: req.user.id });
+
+  if (!existingBudget) {
+    return next(createError(404, "Budget not found"));
+  }
+
+  const normalizedCategory =
+    category === undefined ? existingBudget.category : category || null;
+  const normalizedMonth = month ?? existingBudget.month;
+  const normalizedYear = year ?? existingBudget.year;
+
+  const duplicateBudget = await Budget.findOne({
+    _id: { $ne: req.params.id },
+    user: req.user.id,
+    category: normalizedCategory,
+    month: normalizedMonth,
+    year: normalizedYear,
+  });
+  if (duplicateBudget) {
+    return next(createError(400, "A budget for this category and month already exists."));
+  }
+
+  const updatePayload = {};
+  if (amount !== undefined) updatePayload.amount = amount;
+  if (category !== undefined) updatePayload.category = category || null;
+  if (month !== undefined) updatePayload.month = month;
+  if (year !== undefined) updatePayload.year = year;
+
   const budget = await Budget.findOneAndUpdate(
     { _id: req.params.id, user: req.user.id },
-    { amount },
+    updatePayload,
     { new: true, runValidators: true }
   );
 

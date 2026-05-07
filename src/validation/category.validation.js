@@ -2,19 +2,7 @@ import joi from "joi";
 
 export const createCategorySchema = joi
   .object({
-    type: joi
-      .string()
-      .valid(
-        "living expenses",
-        "food",
-        "transportation",
-        "shopping",
-        "entertainment",
-        "health",
-        "education",
-        "other",
-      )
-      .required(),
+    type: joi.string().min(1).required(),
     icon: joi.string().optional(),
     color: joi.string().optional(),
   })
@@ -29,19 +17,7 @@ export const getOrDeleteCategorySchema = joi
 export const updateCategorySchema = joi
   .object({
     id: joi.string().hex().length(24).required(),
-    type: joi
-      .string()
-      .valid(
-        "living expenses",
-        "food",
-        "transportation",
-        "shopping",
-        "entertainment",
-        "health",
-        "education",
-        "other",
-      )
-      .optional(),
+    type: joi.string().min(1).optional(),
     icon: joi.string().optional(),
     color: joi.string().optional(),
   })

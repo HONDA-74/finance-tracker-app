@@ -93,16 +93,6 @@ const { Schema } = mongoose;
 const categorySchema = new Schema({
   type: {
     type: String,
-    enum: [
-      "living expenses",
-      "food",
-      "transportation",
-      "shopping",
-      "entertainment",
-      "health",
-      "education",
-      "other",
-    ],
     required: true,
   },
   user: {
