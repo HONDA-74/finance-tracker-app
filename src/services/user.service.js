@@ -15,6 +15,7 @@ export const getProfile = async (id) => {
     email: user.email,
     role: user.role,
     avatar: user.avatar,
+    plan: user.plan,
   };
 
   return profile;
@@ -34,6 +35,7 @@ export const updateProfile = async (id, { name, email }) => {
     email: user.email,
     role: user.role,
     avatar: user.avatar,
+    plan: user.plan,
   };
 
   return profile;
