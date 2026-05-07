@@ -17,6 +17,12 @@ export const errorHandler = (err, req, res, next) => {
     message = "Validation error";
   }
 
+  // Handle Joi validation errors
+  if (Array.isArray(message)) {
+    statusCode = 400;
+    message = message.join(", ");
+  }
+
   if (err.name === "JsonWebTokenError") {
     statusCode = 401;
     message = "Invalid token";
