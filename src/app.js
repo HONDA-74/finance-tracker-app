@@ -24,7 +24,7 @@ import paymentRoutes from "./routes/payment.routes.js";
 
 const app = express();
 
-//http://localhost:5000/api-docs
+//http://localhost:3000/api-docs
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 connectDB();
