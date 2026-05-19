@@ -24,6 +24,10 @@ import paymentRoutes from "./routes/payment.routes.js";
 
 const app = express();
 
+connectDB().catch((err) => {
+  console.error("Database connection failed on startup:", err.message);
+});
+
 //http://localhost:3000/api-docs
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

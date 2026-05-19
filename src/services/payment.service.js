@@ -40,8 +40,7 @@ export const handleWebhookEvent = async (event) => {
       return;
     }
 
-    await User.findByIdAndUpdate(userId, { plan: "premium" });
+    await User.findByIdAndUpdate(userId, { plan: "premium", premiumStartedAt: new Date() });
     console.log(`User ${userId} upgraded to premium`);
   }
-  // Extend here: handle payment_intent.payment_failed, customer.subscription.deleted, etc.
 };

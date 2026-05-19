@@ -38,10 +38,13 @@ const userSchema = new Schema(
       public_id: { type: String, default: defaultAvatar.public_id },
     },
     plan: {
-    type: String,
-    enum: ["free", "premium"],
-    default: "free",
-  },
+      type: String,
+      enum: ["free", "premium"],
+      default: "free",
+    },
+    premiumStartedAt: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

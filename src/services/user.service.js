@@ -16,6 +16,7 @@ export const getProfile = async (id) => {
     role: user.role,
     avatar: user.avatar,
     plan: user.plan,
+    premiumStartedAt: user.premiumStartedAt,
   };
 
   return profile;
@@ -36,6 +37,7 @@ export const updateProfile = async (id, { name, email }) => {
     role: user.role,
     avatar: user.avatar,
     plan: user.plan,
+    premiumStartedAt: user.premiumStartedAt,
   };
 
   return profile;
