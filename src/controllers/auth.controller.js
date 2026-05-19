@@ -59,7 +59,7 @@ export const resetPassword = async (req, res, next) => {
     to: user.email,
     subject: "Password Reset Request",
     html: `<p>You requested a password reset. Click the link below to reset your password:</p>
-               <a href="${process.env.FRONTEND_URL}/auth/reset-password-confirm/${user.passwordResetToken}">Reset Password</a>
+               <a href="${process.env.FRONTEND_URL}/finance-tracker-pro/#/auth/reset-password-confirm/${user.passwordResetToken}">Reset Password</a>
                <p>This link will expire in 10 minutes.</p>`,
   });
 
@@ -88,7 +88,6 @@ export const resetPasswordConfirm = async (req, res, next) => {
 export const showResetPasswordForm = async (req, res, next) => {
   const { token } = req.params;
 
-  // Verify token is valid (but don't reset password yet)
   const user = await authService.findUserByResetToken(token);
 
   if (!user) {
