@@ -27,7 +27,21 @@ const app = express();
 //http://localhost:3000/api-docs
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-connectDB();
+// Database connection middleware to ensure connection is established before processing requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("Database connection middleware error:", err);
+    res.status(500).json({
+      success: false,
+      statusCode: 500,
+      message: "Database connection failed",
+      error: err.message
+    });
+  }
+});
 
 app.use(
   cors({
