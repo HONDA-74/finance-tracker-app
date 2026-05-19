@@ -1,24 +1,32 @@
 import jwt from "jsonwebtoken";
 
 export const addTokenToCookie = (token , refreshToken , res) => {
+  const isProduction = process.env.NODE_ENV === "production";
+
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: isProduction,
     maxAge: 7 * 24 * 60 * 60 * 1000,
-    sameSite: "lax",
+    sameSite: isProduction ? "none" : "lax",
   });
 
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: isProduction,
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    sameSite: "lax",
+    sameSite: isProduction ? "none" : "lax",
   });
 };
 
 export const removeTokenFromCookie = (res) => {
-  res.clearCookie("token");
-  res.clearCookie("refreshToken");
+  const isProduction = process.env.NODE_ENV === "production";
+  const options = {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+  };
+  res.clearCookie("token", options);
+  res.clearCookie("refreshToken", options);
 };
 
 export const genToken = (user) => {
