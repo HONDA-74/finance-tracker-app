@@ -12,7 +12,14 @@ export const registerSchema = joi
 export const loginSchema = joi
   .object({
     email: joi.string().email().required(),
-    password: joi.string().min(6).max(30).required(),
+    password: joi
+      .string()
+      .min(8)
+      .max(30)
+      .contains(joi.string().lowercase())
+      .contains(joi.string().uppercase())
+      .contains(joi.string().numeric())
+      .required(),
   })
   .required();
 
@@ -22,10 +29,12 @@ export const resetPasswordSchema = joi
   })
   .required();
 
-export const resetPasswordConfirmSchema = joi.object({
-  // El-Body
-  password: joi.string().min(6).max(30).required(),
-  
-  // El-Params
-  token: joi.string().required()
-}).required();
+export const resetPasswordConfirmSchema = joi
+  .object({
+    // El-Body
+    password: joi.string().min(6).max(30).required(),
+
+    // El-Params
+    token: joi.string().required(),
+  })
+  .required();
