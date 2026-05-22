@@ -4,7 +4,14 @@ export const registerSchema = joi
   .object({
     name: joi.string().min(3).max(30).required(),
     email: joi.string().email().required(),
-    password: joi.string().min(6).max(30).required(),
+    password: joi
+      .string()
+      .min(8)
+      .pattern(/[a-z]/, "lowercase")
+      .pattern(/[A-Z]/, "uppercase")
+      .pattern(/[0-9]/, "number")
+      .max(30)
+      .required(),
     role: joi.string().valid("user", "admin").default("user"),
   })
   .required();
@@ -12,14 +19,7 @@ export const registerSchema = joi
 export const loginSchema = joi
   .object({
     email: joi.string().email().required(),
-    password: joi
-      .string()
-      .min(8)
-      .max(30)
-      .pattern(/[a-z]/, 'lowercase')
-      .pattern(/[A-Z]/, 'uppercase')
-      .pattern(/[0-9]/, 'number')
-      .required(),
+    password: joi.string().max(30).required(),
   })
   .required();
 
