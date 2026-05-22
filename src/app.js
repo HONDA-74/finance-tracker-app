@@ -53,25 +53,25 @@ const allowedOrigins = [
   process.env.FRONTEND_URL
 ].filter(Boolean);
 
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin) return callback(null, true);
-//       const isAllowed = allowedOrigins.includes(origin) || 
-//                         /^https?:\/\/localhost(:\d+)?$/.test(origin) || 
-//                         origin.endsWith(".vercel.app");
-//       if (isAllowed) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//     credentials: true,
-//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-//     allowedHeaders: ["Content-Type", "Authorization"],
-//   }),
-// );
-app.use(cors());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      const isAllowed = allowedOrigins.includes(origin) || 
+                        /^https?:\/\/localhost(:\d+)?$/.test(origin) || 
+                        origin.endsWith(".vercel.app") ||
+                        origin.endsWith(".github.io");
+      if (isAllowed) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 app.use(helmet());
 

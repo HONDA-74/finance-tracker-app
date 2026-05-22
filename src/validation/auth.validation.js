@@ -16,9 +16,9 @@ export const loginSchema = joi
       .string()
       .min(8)
       .max(30)
-      .contains(joi.string().lowercase())
-      .contains(joi.string().uppercase())
-      .contains(joi.string().numeric())
+      .pattern(/[a-z]/, 'lowercase')
+      .pattern(/[A-Z]/, 'uppercase')
+      .pattern(/[0-9]/, 'number')
       .required(),
   })
   .required();
